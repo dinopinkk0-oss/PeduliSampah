@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WebGIS TPS Yogyakarta – Dari Pemetaan ke Keputusan</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<!-- ===== MUSIC PLAYER ===== -->
+<div id="musicPlayer" class="music-player">
+  <button id="musicToggle" class="music-btn" title="Putar/Pause Musik">
+    <i class="fas fa-music"></i>
+  </button>
+  <div class="music-info">
+    <span class="music-title">Relaksasi Sunda Alam</span>
+    <div class="music-wave">
+      <span></span><span></span><span></span><span></span><span></span>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PARTICLES ===== -->
+<div id="particles-container"></div>
+
+<!-- ===== LANDING PAGE ===== -->
+<section id="landing" class="landing-section">
+  <!-- Hero Background -->
+  <div class="hero-bg">
+    <div class="hero-img-wrap">
+      <img src="https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?w=1920&q=80" alt="Sampah dan Lingkungan" class="hero-img" />
+    </div>
+    <div class="hero-overlay"></div>
+    <div class="leaf-deco leaf-1">🌿</div>
+    <div class="leaf-deco leaf-2">🍃</div>
+    <div class="leaf-deco leaf-3">🌱</div>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="nav-brand">
+      <span class="nav-icon">🗺️</span>
+      <span>WebGIS Yogyakarta</span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#about-section" class="nav-link smooth-scroll">Tentang</a></li>
+      <li><a href="map.html" class="nav-link">Peta</a></li>
+      <li><a href="edukasi.html" class="nav-link">Edukasi</a></li>
+      <li><a href="#video-section" class="nav-link smooth-scroll">Video</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero Content -->
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span>🌿</span> Sistem Informasi Geografis
+    </div>
+    <h1 class="hero-title">
+      Dari Pemetaan<br/>
+      <span class="accent-text">ke Keputusan</span>
+    </h1>
+    <p class="hero-subtitle">
+      Web GIS untuk Analisis Kelayakan dan Optimalisasi<br/>
+      Lokasi TPS di <strong>Kota Yogyakarta</strong>
+    </p>
+    <p class="hero-tagline">
+      <i class="fas fa-leaf"></i>
+      "Peduli Sampah dan Lingkungan untuk Masa Depan yang Lebih Sehat"
+    </p>
+    <div class="hero-buttons">
+      <a href="map.html" class="btn btn-primary">
+        <i class="fas fa-map-marked-alt"></i> Masuk ke Peta
+      </a>
+      <a href="edukasi.html" class="btn btn-outline">
+        <i class="fas fa-book-open"></i> Edukasi
+      </a>
+      <a href="#about-section" class="btn btn-ghost smooth-scroll">
+        <i class="fas fa-info-circle"></i> Tentang
+      </a>
+    </div>
+    <div class="hero-scroll-hint">
+      <i class="fas fa-chevron-down"></i>
+    </div>
+  </div>
+
+  <!-- Stats Bar -->
+  <div class="stats-bar">
+    <div class="stat-item">
+      <span class="stat-num">10</span>
+      <span class="stat-lbl">Titik TPS/TPA</span>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat-item">
+      <span class="stat-num">3</span>
+      <span class="stat-lbl">Zona Dampak</span>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat-item">
+      <span class="stat-num">4</span>
+      <span class="stat-lbl">Jenis Fasilitas</span>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat-item">
+      <span class="stat-num">1</span>
+      <span class="stat-lbl">Kota Yogyakarta</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===== ABOUT / LATAR BELAKANG ===== -->
+<section id="about-section" class="about-section">
+  <div class="section-container">
+    <div class="section-header">
+      <div class="section-badge">📋 Latar Belakang</div>
+      <h2 class="section-title">Mengapa WebGIS Ini<br/><span class="accent">Diciptakan?</span></h2>
+      <p class="section-subtitle">Memahami permasalahan sampah perkotaan dari sudut pandang spasial</p>
+    </div>
+
+    <div class="about-grid">
+      <div class="about-text-col">
+        <div class="about-card glass-card">
+          <div class="about-icon-wrap">
+            <i class="fas fa-city"></i>
+          </div>
+          <p>
+            Pertumbuhan penduduk dan aktivitas perkotaan di Yogyakarta menyebabkan peningkatan volume sampah yang signifikan. Namun, ketersediaan dan persebaran Tempat Pembuangan Sementara (TPS) serta Tempat Pembuangan Akhir (TPA) belum sepenuhnya optimal.
+          </p>
+          <p>
+            Beberapa lokasi TPS berada terlalu dekat dengan permukiman dan sungai sehingga berpotensi menimbulkan pencemaran lingkungan, sementara di sisi lain terdapat wilayah padat penduduk yang belum terlayani fasilitas TPS secara memadai.
+          </p>
+        </div>
+        <div class="about-card glass-card">
+          <div class="about-icon-wrap">
+            <i class="fas fa-map-pin"></i>
+          </div>
+          <p>
+            Permasalahan ini menunjukkan bahwa pengelolaan sampah tidak hanya bergantung pada jumlah fasilitas, tetapi juga pada <strong>ketepatan lokasi secara spasial</strong>. Oleh karena itu, diperlukan pendekatan berbasis Sistem Informasi Geografis (SIG) untuk menganalisis hubungan antara persebaran TPS/TPA dengan faktor lingkungan seperti permukiman dan jarak terhadap area sensitif.
+          </p>
+        </div>
+        <div class="about-card glass-card highlight-card">
+          <div class="about-icon-wrap green">
+            <i class="fas fa-seedling"></i>
+          </div>
+          <p>
+            WebGIS ini dikembangkan sebagai media visualisasi dan analisis untuk membantu memahami persebaran fasilitas pengelolaan sampah, mengidentifikasi potensi dampak lingkungan, serta mendukung pengambilan keputusan yang lebih tepat dalam penentuan lokasi TPS. Dengan demikian, diharapkan dapat mendorong terciptanya <strong>lingkungan yang lebih bersih, sehat, dan berkelanjutan</strong>.
+          </p>
+        </div>
+      </div>
+
+      <div class="about-visual-col">
+        <div class="problem-cards">
+          <h3 class="problem-title">Permasalahan Utama</h3>
+          <div class="problem-item">
+            <div class="problem-icon red"><i class="fas fa-exclamation-triangle"></i></div>
+            <div>
+              <strong>TPS Terlalu Dekat Permukiman</strong>
+              <p>Bau, pencemaran, dan gangguan kesehatan bagi warga sekitar</p>
+            </div>
+          </div>
+          <div class="problem-item">
+            <div class="problem-icon orange"><i class="fas fa-water"></i></div>
+            <div>
+              <strong>Dekat Sungai & Area Sensitif</strong>
+              <p>Potensi pencemaran air tanah dan ekosistem sungai</p>
+            </div>
+          </div>
+          <div class="problem-item">
+            <div class="problem-icon yellow"><i class="fas fa-map-marker-alt"></i></div>
+            <div>
+              <strong>Wilayah Belum Terlayani</strong>
+              <p>Area padat penduduk yang kekurangan fasilitas TPS</p>
+            </div>
+          </div>
+          <div class="solution-box">
+            <h4><i class="fas fa-lightbulb"></i> Solusi: WebGIS</h4>
+            <p>Visualisasi spasial interaktif untuk mendukung pengambilan keputusan berbasis data</p>
+            <a href="map.html" class="btn btn-primary btn-sm">Buka Peta Sekarang</a>
+          </div>
+        </div>
+
+        <div class="about-img-wrap">
+          <img src="https://images.unsplash.com/photo-1611284446314-60a58ac0deb9?w=600&q=80" alt="Pengelolaan Sampah" class="about-img" />
+          <div class="img-badge">
+            <i class="fas fa-recycle"></i> Pengelolaan Sampah Berkelanjutan
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FITUR ===== -->
+<section class="features-section">
+  <div class="section-container">
+    <div class="section-header">
+      <div class="section-badge">⚙️ Fitur</div>
+      <h2 class="section-title">Apa yang Bisa<br/><span class="accent">Kamu Lakukan?</span></h2>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feat-icon"><i class="fas fa-map-marked-alt"></i></div>
+        <h3>Peta Interaktif</h3>
+        <p>Lihat persebaran TPS dan TPA di Kota Yogyakarta secara visual dan interaktif</p>
+      </div>
+      <div class="feature-card">
+        <div class="feat-icon"><i class="fas fa-circle-dot"></i></div>
+        <h3>Analisis Buffer</h3>
+        <p>Tampilkan zona dampak 100m, 250m, 500m dari setiap titik fasilitas</p>
+      </div>
+      <div class="feature-card">
+        <div class="feat-icon"><i class="fas fa-satellite"></i></div>
+        <h3>Tampilan Satelit</h3>
+        <p>Beralih ke citra satelit untuk melihat kondisi nyata di lapangan</p>
+      </div>
+      <div class="feature-card">
+        <div class="feat-icon"><i class="fas fa-search"></i></div>
+        <h3>Pencarian Lokasi</h3>
+        <p>Cari fasilitas berdasarkan nama untuk navigasi cepat</p>
+      </div>
+      <div class="feature-card">
+        <div class="feat-icon"><i class="fas fa-filter"></i></div>
+        <h3>Filter Fasilitas</h3>
+        <p>Filter tampilan berdasarkan jenis: TPS, TPA, TPST, atau Depo</p>
+      </div>
+      <div class="feature-card">
+        <div class="feat-icon"><i class="fas fa-graduation-cap"></i></div>
+        <h3>Konten Edukatif</h3>
+        <p>Pelajari dampak sampah dan pentingnya pengelolaan yang baik</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== VIDEO SECTION ===== -->
+<section id="video-section" class="video-section">
+  <div class="section-container">
+    <div class="section-header">
+      <div class="section-badge">🎬 Video Edukasi</div>
+      <h2 class="section-title">Yuk, Peduli<br/><span class="accent">Sampah & Lingkungan!</span></h2>
+      <p class="section-subtitle">Tonton video berikut untuk menambah wawasanmu tentang pengelolaan sampah</p>
+    </div>
+    <div class="videos-grid">
+      <div class="video-card">
+        <div class="video-thumb-wrap">
+          <iframe
+            src="https://www.youtube.com/embed/snRhl3ING0Y"
+            title="Video Peduli Sampah 1"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+          </iframe>
+        </div>
+        <div class="video-info">
+          <span class="video-tag"><i class="fas fa-recycle"></i> Pengelolaan Sampah</span>
+          <p>Cara bijak mengelola sampah untuk masa depan lingkungan yang lebih baik</p>
+        </div>
+      </div>
+      <div class="video-card">
+        <div class="video-thumb-wrap">
+          <iframe
+            src="https://www.youtube.com/embed/yKZB0ETjGbI"
+            title="Video Peduli Sampah 2"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+          </iframe>
+        </div>
+        <div class="video-info">
+          <span class="video-tag"><i class="fas fa-leaf"></i> Lingkungan Sehat</span>
+          <p>Dampak nyata sampah terhadap lingkungan dan cara mengatasinya</p>
+        </div>
+      </div>
+      <div class="video-card">
+        <div class="video-thumb-wrap">
+          <iframe
+            src="https://www.youtube.com/embed/BiyxBjlBweY"
+            title="Video Peduli Sampah 3"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+          </iframe>
+        </div>
+        <div class="video-info">
+          <span class="video-tag"><i class="fas fa-city"></i> Kota Bersih</span>
+          <p>Membangun kesadaran masyarakat untuk kota yang lebih bersih dan sehat</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TEAM ===== -->
+<section class="team-section">
+  <div class="section-container">
+    <div class="section-header">
+      <div class="section-badge">👥 Tim</div>
+      <h2 class="section-title">Dibuat oleh<br/><span class="accent">Kelompok 1</span></h2>
+    </div>
+    <div class="team-grid">
+      <div class="team-card"><div class="team-avatar">VR</div><span>Vichesa Risma Putri</span></div>
+      <div class="team-card"><div class="team-avatar">AP</div><span>Amelia Pitra Salsabila Banu Susilo</span></div>
+      <div class="team-card"><div class="team-avatar">IN</div><span>Ilma Nugraheni</span></div>
+      <div class="team-card"><div class="team-avatar">EH</div><span>Erfina Hijria Ashsakinaya</span></div>
+      <div class="team-card"><div class="team-avatar">CY</div><span>Cecilia Yuli Santi Br. Pane</span></div>
+      <div class="team-card"><div class="team-avatar">MN</div><span>M. Naufal Candra Nusantara</span></div>
+      <div class="team-card"><div class="team-avatar">CK</div><span>Cahya Kastim Putra</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-logo">
+      <span>🗺️</span> WebGIS TPS Yogyakarta
+    </div>
+    <p class="footer-tagline">"Peduli Sampah dan Lingkungan untuk Masa Depan yang Lebih Sehat"</p>
+    <div class="footer-links">
+      <a href="index.html">Beranda</a>
+      <a href="map.html">Peta</a>
+      <a href="edukasi.html">Edukasi</a>
+    </div>
+    <p class="footer-copy">© 2025 Kelompok 1 – WebGIS TPS Yogyakarta</p>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

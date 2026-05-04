@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Edukasi – WebGIS TPS Yogyakarta</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/edukasi.css" />
+</head>
+<body class="edu-body">
+
+<!-- MUSIC PLAYER -->
+<div id="musicPlayer" class="music-player">
+  <button id="musicToggle" class="music-btn" title="Putar/Pause Musik">
+    <i class="fas fa-music"></i>
+  </button>
+  <div class="music-info">
+    <span class="music-title">Relaksasi Sunda Alam</span>
+    <div class="music-wave">
+      <span></span><span></span><span></span><span></span><span></span>
+    </div>
+  </div>
+</div>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-edu">
+  <a href="index.html" class="nav-back-btn">
+    <i class="fas fa-arrow-left"></i> Beranda
+  </a>
+  <div class="nav-brand">
+    <span>🌿</span> Edukasi Lingkungan
+  </div>
+  <a href="map.html" class="nav-map-btn">
+    <i class="fas fa-map-marked-alt"></i> Buka Peta
+  </a>
+</nav>
+
+<!-- HERO EDU -->
+<section class="edu-hero">
+  <div class="edu-hero-bg">
+    <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=1920&q=80" alt="Lingkungan" />
+    <div class="edu-hero-overlay"></div>
+  </div>
+  <div class="edu-hero-content">
+    <div class="edu-badge"><i class="fas fa-book-open"></i> Edukasi</div>
+    <h1>Kenali Sampahmu,<br/><span>Jaga Buminya</span></h1>
+    <p>Pelajari pentingnya pengelolaan sampah yang baik untuk lingkungan yang lebih sehat dan berkelanjutan</p>
+  </div>
+</section>
+
+<!-- CONTENT -->
+<div class="edu-content">
+
+  <!-- SECTION: Pengertian TPS & TPA -->
+  <section class="edu-section">
+    <div class="edu-section-inner">
+      <div class="edu-section-header">
+        <div class="edu-icon-big"><i class="fas fa-dumpster"></i></div>
+        <div>
+          <h2>Apa Itu TPS & TPA?</h2>
+          <p class="edu-subtitle">Memahami fasilitas pengelolaan sampah di perkotaan</p>
+        </div>
+      </div>
+      <div class="edu-cards-row">
+        <div class="edu-card edu-card-tps">
+          <div class="edu-card-icon"><i class="fas fa-trash-can"></i></div>
+          <div class="edu-card-badge yellow-badge">TPS</div>
+          <h3>Tempat Penampungan Sementara</h3>
+          <p>TPS adalah titik awal pengumpulan sampah dari rumah tangga dan aktivitas sehari-hari sebelum diangkut ke TPA. TPS berfungsi sebagai "stasiun antara" dalam rantai pengelolaan sampah.</p>
+          <ul class="edu-list">
+            <li>Menampung sampah dari rumah tangga dan pasar</li>
+            <li>Tersebar di berbagai titik strategis kota</li>
+            <li>Sampah diambil secara berkala oleh petugas</li>
+            <li>Kapasitas terbatas, perlu dikelola dengan baik</li>
+          </ul>
+        </div>
+        <div class="edu-card edu-card-tpa">
+          <div class="edu-card-icon"><i class="fas fa-mountain"></i></div>
+          <div class="edu-card-badge red-badge">TPA</div>
+          <h3>Tempat Pembuangan Akhir</h3>
+          <p>TPA adalah lokasi akhir di mana sampah dikumpulkan, diproses, dan dikelola. Di sinilah sampah diurug, dibakar, atau diproses menggunakan teknologi tertentu.</p>
+          <ul class="edu-list">
+            <li>Menerima sampah dari seluruh kota</li>
+            <li>Proses pengolahan: sanitary landfill, kompos, dll</li>
+            <li>Lokasi harus jauh dari permukiman</li>
+            <li>Dipantau untuk mencegah pencemaran</li>
+          </ul>
+        </div>
+        <div class="edu-card edu-card-tpst">
+          <div class="edu-card-icon"><i class="fas fa-recycle"></i></div>
+          <div class="edu-card-badge blue-badge">TPST</div>
+          <h3>Tempat Pengolahan Sampah Terpadu</h3>
+          <p>TPST adalah fasilitas modern yang mengintegrasikan proses pemilahan, pengomposan, dan daur ulang sampah dalam satu lokasi.</p>
+          <ul class="edu-list">
+            <li>Pemilahan sampah organik dan anorganik</li>
+            <li>Pengomposan sampah organik</li>
+            <li>Daur ulang sampah anorganik</li>
+            <li>Lebih ramah lingkungan dari TPA konvensional</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: Dampak Sampah -->
+  <section class="edu-section bg-light-green">
+    <div class="edu-section-inner">
+      <div class="edu-section-header center-header">
+        <div class="edu-icon-big red-icon"><i class="fas fa-biohazard"></i></div>
+        <div>
+          <h2>Dampak Sampah yang Tidak Dikelola</h2>
+          <p class="edu-subtitle">Bahaya nyata yang mengancam lingkungan dan kesehatan kita</p>
+        </div>
+      </div>
+      <div class="impact-grid">
+        <div class="impact-card">
+          <div class="impact-icon water-icon"><i class="fas fa-water"></i></div>
+          <h3>Pencemaran Air</h3>
+          <p>Lindi (leachate) dari timbunan sampah meresap ke tanah dan mencemari air tanah serta sungai, mengancam sumber air minum</p>
+        </div>
+        <div class="impact-card">
+          <div class="impact-icon air-icon"><i class="fas fa-wind"></i></div>
+          <h3>Pencemaran Udara</h3>
+          <p>Sampah yang membusuk menghasilkan gas metana (CH₄) dan bau tidak sedap yang mencemari udara dan berkontribusi pada perubahan iklim</p>
+        </div>
+        <div class="impact-card">
+          <div class="impact-icon health-icon"><i class="fas fa-heart-pulse"></i></div>
+          <h3>Gangguan Kesehatan</h3>
+          <p>TPS yang terlalu dekat dengan permukiman menjadi sarang nyamuk dan lalat, meningkatkan risiko penyakit DBD, diare, dan penyakit pernapasan</p>
+        </div>
+        <div class="impact-card">
+          <div class="impact-icon eco-icon"><i class="fas fa-frog"></i></div>
+          <h3>Kerusakan Ekosistem</h3>
+          <p>Sampah plastik di perairan merusak ekosistem sungai dan mengganggu keseimbangan alam yang membutuhkan waktu lama untuk pulih</p>
+        </div>
+        <div class="impact-card">
+          <div class="impact-icon social-icon"><i class="fas fa-users"></i></div>
+          <h3>Dampak Sosial</h3>
+          <p>Kawasan yang kotor menurunkan nilai estetika kota, mengurangi kenyamanan warga, dan dapat menurunkan nilai properti di sekitarnya</p>
+        </div>
+        <div class="impact-card">
+          <div class="impact-icon climate-icon"><i class="fas fa-cloud-sun"></i></div>
+          <h3>Perubahan Iklim</h3>
+          <p>Dekomposisi sampah organik menghasilkan gas rumah kaca yang berkontribusi pada pemanasan global dan perubahan iklim</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: Tips Pengelolaan -->
+  <section class="edu-section">
+    <div class="edu-section-inner">
+      <div class="edu-section-header center-header">
+        <div class="edu-icon-big green-icon"><i class="fas fa-lightbulb"></i></div>
+        <div>
+          <h2>Pentingnya Pengelolaan Sampah yang Baik</h2>
+          <p class="edu-subtitle">Langkah-langkah yang bisa kamu lakukan sehari-hari</p>
+        </div>
+      </div>
+      <div class="steps-row">
+        <div class="step-card">
+          <div class="step-num">1</div>
+          <div class="step-icon"><i class="fas fa-sort-amount-down"></i></div>
+          <h3>Kurangi (Reduce)</h3>
+          <p>Kurangi penggunaan produk yang menghasilkan banyak sampah. Bawa tas belanja sendiri, hindari penggunaan plastik sekali pakai</p>
+        </div>
+        <div class="step-arrow"><i class="fas fa-chevron-right"></i></div>
+        <div class="step-card">
+          <div class="step-num">2</div>
+          <div class="step-icon"><i class="fas fa-redo"></i></div>
+          <h3>Gunakan Ulang (Reuse)</h3>
+          <p>Manfaatkan kembali barang-barang yang masih bisa digunakan sebelum membuangnya. Botol air minum, wadah makanan, dan tas bisa digunakan berulang kali</p>
+        </div>
+        <div class="step-arrow"><i class="fas fa-chevron-right"></i></div>
+        <div class="step-card">
+          <div class="step-num">3</div>
+          <div class="step-icon"><i class="fas fa-recycle"></i></div>
+          <h3>Daur Ulang (Recycle)</h3>
+          <p>Pisahkan sampah organik dan anorganik. Sampah plastik, kertas, dan logam bisa didaur ulang menjadi produk baru yang bermanfaat</p>
+        </div>
+        <div class="step-arrow"><i class="fas fa-chevron-right"></i></div>
+        <div class="step-card">
+          <div class="step-num">4</div>
+          <div class="step-icon"><i class="fas fa-seedling"></i></div>
+          <h3>Kompos (Rot)</h3>
+          <p>Ubah sampah organik seperti sisa makanan dan dedaunan menjadi kompos yang berguna untuk menyuburkan tanaman</p>
+        </div>
+      </div>
+
+      <!-- Fun Facts -->
+      <div class="fun-facts">
+        <h3><i class="fas fa-star"></i> Tahukah Kamu?</h3>
+        <div class="facts-grid">
+          <div class="fact-item">
+            <span class="fact-num">500+</span>
+            <span>tahun waktu plastik terurai di alam</span>
+          </div>
+          <div class="fact-item">
+            <span class="fact-num">1 ton</span>
+            <span>kertas daur ulang menyelamatkan 17 pohon</span>
+          </div>
+          <div class="fact-item">
+            <span class="fact-num">80%</span>
+            <span>sampah di TPA bisa didaur ulang/dikompos</span>
+          </div>
+          <div class="fact-item">
+            <span class="fact-num">60%</span>
+            <span>sampah Indonesia adalah sampah organik</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: Pentingnya SIG -->
+  <section class="edu-section bg-dark-green">
+    <div class="edu-section-inner">
+      <div class="edu-section-header center-header">
+        <div class="edu-icon-big white-icon"><i class="fas fa-map-location-dot"></i></div>
+        <div>
+          <h2 class="white-text">Peran SIG dalam Pengelolaan Sampah</h2>
+          <p class="edu-subtitle white-text">Bagaimana teknologi pemetaan membantu menyelesaikan masalah sampah</p>
+        </div>
+      </div>
+      <div class="sig-cards">
+        <div class="sig-card">
+          <i class="fas fa-map-pin"></i>
+          <h3>Pemetaan Spasial</h3>
+          <p>SIG memungkinkan kita melihat sebaran lokasi TPS secara visual, sehingga mudah mengidentifikasi wilayah yang kekurangan atau kelebihan fasilitas</p>
+        </div>
+        <div class="sig-card">
+          <i class="fas fa-ruler-combined"></i>
+          <h3>Analisis Jarak</h3>
+          <p>Dengan SIG, kita bisa mengukur jarak antara TPS dengan permukiman, sungai, dan area sensitif lainnya untuk menilai kelayakan lokasi</p>
+        </div>
+        <div class="sig-card">
+          <i class="fas fa-chart-bar"></i>
+          <h3>Pendukung Keputusan</h3>
+          <p>Data spasial dari SIG membantu pemerintah dan perencana kota membuat keputusan yang lebih tepat dan berbasis data nyata</p>
+        </div>
+        <div class="sig-card">
+          <i class="fas fa-eye"></i>
+          <h3>Transparansi Publik</h3>
+          <p>WebGIS memungkinkan masyarakat umum untuk ikut memantau dan memahami kondisi pengelolaan sampah di wilayahnya</p>
+        </div>
+      </div>
+      <div class="cta-box">
+        <h3>Siap Menjelajahi Peta?</h3>
+        <p>Gunakan WebGIS interaktif kami untuk melihat langsung persebaran TPS di Kota Yogyakarta</p>
+        <a href="map.html" class="btn btn-white">
+          <i class="fas fa-map-marked-alt"></i> Buka Peta Sekarang
+        </a>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-logo"><span>🗺️</span> WebGIS TPS Yogyakarta</div>
+    <p class="footer-tagline">"Peduli Sampah dan Lingkungan untuk Masa Depan yang Lebih Sehat"</p>
+    <div class="footer-links">
+      <a href="index.html">Beranda</a>
+      <a href="map.html">Peta</a>
+      <a href="edukasi.html">Edukasi</a>
+    </div>
+    <p class="footer-copy">© 2025 Kelompok 1 – WebGIS TPS Yogyakarta</p>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

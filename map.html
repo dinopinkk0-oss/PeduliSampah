@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Peta TPS Yogyakarta – WebGIS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link href="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.css" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/map.css" />
+</head>
+<body class="map-body">
+
+<!-- MUSIC PLAYER -->
+<div id="musicPlayer" class="music-player">
+  <button id="musicToggle" class="music-btn" title="Putar/Pause Musik">
+    <i class="fas fa-music"></i>
+  </button>
+  <div class="music-info">
+    <span class="music-title">Relaksasi Sunda Alam</span>
+    <div class="music-wave">
+      <span></span><span></span><span></span><span></span><span></span>
+    </div>
+  </div>
+</div>
+
+<!-- MAP NAVBAR -->
+<div class="map-navbar">
+  <a href="index.html" class="map-nav-back">
+    <i class="fas fa-arrow-left"></i> Beranda
+  </a>
+  <div class="map-nav-title">
+    </span> Peta TPA/TPS Kota Yogyakarta
+  </div>
+  <div class="map-nav-actions">
+    <a href="edukasi.html" class="map-nav-btn">
+      <i class="fas fa-book-open"></i> Edukasi
+    </a>
+  </div>
+</div>
+
+<!-- MAIN MAP LAYOUT -->
+<div class="map-layout">
+
+  <!-- SIDEBAR -->
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-header">
+      <h2><i class="fas fa-layer-group"></i> Panel Kontrol</h2>
+      <button id="sidebarToggle" class="sidebar-toggle-btn" title="Sembunyikan/Tampilkan Sidebar">
+        <i class="fas fa-chevron-left"></i>
+      </button>
+    </div>
+
+    <!-- Search -->
+    <div class="sidebar-section">
+      <h3><i class="fas fa-search"></i> Pencarian</h3>
+      <div class="search-wrap">
+        <input type="text" id="searchInput" placeholder="Cari nama lokasi..." class="search-input" />
+        <button id="searchBtn" class="search-btn"><i class="fas fa-search"></i></button>
+      </div>
+      <ul id="searchResults" class="search-results"></ul>
+    </div>
+
+    <!-- Basemap -->
+    <div class="sidebar-section">
+      <h3><i class="fas fa-globe"></i> Tampilan Peta</h3>
+      <div class="basemap-btns">
+        <button id="btnStreets" class="basemap-btn active">
+          <i class="fas fa-road"></i> Streets
+        </button>
+        <button id="btnSatellite" class="basemap-btn">
+          <i class="fas fa-satellite"></i> Satelit
+        </button>
+      </div>
+    </div>
+
+    <!-- Filter -->
+    <div class="sidebar-section">
+      <h3><i class="fas fa-filter"></i> Filter Fasilitas</h3>
+      <div class="filter-group">
+        <label class="filter-item">
+          <input type="checkbox" class="filter-cb" value="TPA" checked />
+          <span class="filter-dot red-dot"></span> TPA (Tempat Pembuangan Akhir)
+        </label>
+        <label class="filter-item">
+          <input type="checkbox" class="filter-cb" value="TPS" checked />
+          <span class="filter-dot yellow-dot"></span> TPS (Penampungan Sementara)
+        </label>
+        <label class="filter-item">
+          <input type="checkbox" class="filter-cb" value="TPST" checked />
+          <span class="filter-dot blue-dot"></span> TPST (Terpadu)
+        </label>
+        <label class="filter-item">
+          <input type="checkbox" class="filter-cb" value="Depo" checked />
+          <span class="filter-dot green-dot"></span> Depo/TPS
+        </label>
+      </div>
+    </div>
+
+    <!-- Buffer / Zona Dampak -->
+    <div class="sidebar-section">
+      <h3><i class="fas fa-circle-dot"></i> Analisis Zona Dampak</h3>
+      <div class="buffer-info-box">
+        <p><strong>Apa itu Zona Dampak?</strong><br/>
+        Zona ini menunjukkan seberapa dekat suatu wilayah dengan fasilitas TPS/TPA. Semakin dekat jaraknya, semakin besar potensi dampak seperti bau, pencemaran, dan gangguan lingkungan.</p>
+      </div>
+      <div class="buffer-legend">
+        <div class="buf-leg-item"><span class="buf-dot" style="background:#ef4444"></span> 100m – Risiko Tinggi</div>
+        <div class="buf-leg-item"><span class="buf-dot" style="background:#f59e0b"></span> 250m – Risiko Sedang</div>
+        <div class="buf-leg-item"><span class="buf-dot" style="background:#22c55e"></span> 500m – Risiko Rendah</div>
+      </div>
+      <button id="btnBuffer" class="btn-buffer">
+        <i class="fas fa-bullseye"></i> Lihat Zona Dampak
+      </button>
+      <button id="btnClearBuffer" class="btn-clear-buffer" style="display:none">
+        <i class="fas fa-times"></i> Hapus Buffer
+      </button>
+    </div>
+
+    <!-- Navigation -->
+    <div class="sidebar-section">
+      <h3><i class="fas fa-compass"></i> Navigasi</h3>
+      <button id="btnReset" class="btn-reset">
+        <i class="fas fa-home"></i> Kembali ke Yogyakarta
+      </button>
+    </div>
+
+    <!-- Info Singkat -->
+    <div class="sidebar-section">
+      <h3><i class="fas fa-info-circle"></i> Info Singkat</h3>
+      <div class="info-legend">
+        <div class="info-leg-item">
+          <span class="leg-badge red-badge">TPA</span>
+          <span>Tempat Pembuangan Akhir sampah</span>
+        </div>
+        <div class="info-leg-item">
+          <span class="leg-badge yellow-badge">TPS</span>
+          <span>Tempat Penampungan Sementara</span>
+        </div>
+        <div class="info-leg-item">
+          <span class="leg-badge blue-badge">TPST</span>
+          <span>Tempat Pengolahan Sampah Terpadu</span>
+        </div>
+        <div class="info-leg-item">
+          <span class="leg-badge green-badge">DEPO</span>
+          <span>Depo/titik kumpul sampah</span>
+        </div>
+        <div class="info-tip">
+          <i class="fas fa-lightbulb"></i>
+          Lokasi TPS yang tidak tepat dapat berdampak negatif pada lingkungan sekitar!
+        </div>
+      </div>
+    </div>
+
+    <!-- User Guide -->
+    <div class="sidebar-section">
+      <h3><i class="fas fa-question-circle"></i> Cara Menggunakan</h3>
+      <ul class="user-guide">
+        <li><i class="fas fa-mouse-pointer"></i> Klik titik untuk melihat informasi</li>
+        <li><i class="fas fa-search"></i> Gunakan pencarian untuk cari lokasi</li>
+        <li><i class="fas fa-bullseye"></i> Klik "Zona Dampak" untuk analisis</li>
+        <li><i class="fas fa-satellite"></i> Tombol satelit untuk citra nyata</li>
+        <li><i class="fas fa-filter"></i> Filter untuk menyaring jenis fasilitas</li>
+      </ul>
+    </div>
+  </aside>
+
+  <!-- MAP CONTAINER -->
+  <div class="map-container-wrap">
+    <div id="map"></div>
+
+    <!-- Floating sidebar toggle for mobile -->
+    <button id="mobileSidebarToggle" class="mobile-sidebar-toggle">
+      <i class="fas fa-sliders-h"></i>
+    </button>
+
+    <!-- Point count badge -->
+    <div class="map-badge-info">
+      <i class="fas fa-map-pin"></i>
+      <span id="visibleCount">10</span> titik ditampilkan
+    </div>
+  </div>
+</div>
+
+<!-- Loading overlay -->
+<div id="mapLoading" class="map-loading">
+  <div class="loading-spinner"></div>
+  <p>Memuat Peta...</p>
+</div>
+
+<script src="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.js"></script>
+<script src="js/map.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
