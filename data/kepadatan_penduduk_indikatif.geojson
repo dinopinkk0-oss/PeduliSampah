@@ -1,0 +1,261 @@
+{
+  "type": "FeatureCollection",
+  "name": "kepadatan_penduduk_indikatif",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Kotabaru / Gondokusuman",
+        "density": "Padat",
+        "value": 15700,
+        "unit": "jiwa/km²",
+        "note": "indikatif untuk visualisasi WebGIS"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          110.369345,
+          -7.788281
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Karanganyar",
+        "density": "Padat",
+        "value": 17000,
+        "unit": "jiwa/km²",
+        "note": "indikatif untuk visualisasi WebGIS"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          110.373279,
+          -7.818187
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Keparakan",
+        "density": "Sangat Padat",
+        "value": 21000,
+        "unit": "jiwa/km²",
+        "note": "indikatif untuk visualisasi WebGIS"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          110.369303,
+          -7.806736
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Patangpuluhan",
+        "density": "Sedang",
+        "value": 12500,
+        "unit": "jiwa/km²",
+        "note": "indikatif untuk visualisasi WebGIS"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          110.34541,
+          -7.811109
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Lempuyangan",
+        "density": "Padat",
+        "value": 19000,
+        "unit": "jiwa/km²",
+        "note": "indikatif untuk visualisasi WebGIS"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          110.373946,
+          -7.790702
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Argolubang",
+        "density": "Sedang-Padat",
+        "value": 14500,
+        "unit": "jiwa/km²",
+        "note": "indikatif untuk visualisasi WebGIS"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          110.380525,
+          -7.790037
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Gedongkuning",
+        "density": "Padat",
+        "value": 17000,
+        "unit": "jiwa/km²",
+        "note": "indikatif untuk visualisasi WebGIS"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          110.397968,
+          -7.807036
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Kotagede",
+        "density": "Padat",
+        "value": 15800,
+        "unit": "jiwa/km²",
+        "note": "indikatif untuk visualisasi WebGIS"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          110.396224,
+          -7.822183
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Karangmiri",
+        "density": "Sedang",
+        "value": 10500,
+        "unit": "jiwa/km²",
+        "note": "indikatif untuk visualisasi WebGIS"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          110.395525,
+          -7.83277
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Pengok",
+        "density": "Sangat Padat",
+        "value": 20000,
+        "unit": "jiwa/km²",
+        "note": "indikatif untuk visualisasi WebGIS"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          110.387864,
+          -7.787954
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Nitikan",
+        "density": "Padat",
+        "value": 17500,
+        "unit": "jiwa/km²",
+        "note": "indikatif untuk visualisasi WebGIS"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          110.386667,
+          -7.828132
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Kelurahan Bener",
+        "density": "Sedang",
+        "value": 12500,
+        "unit": "jiwa/km²",
+        "note": "indikatif untuk visualisasi WebGIS"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          110.351869,
+          -7.775734
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Sorosutan",
+        "density": "Padat",
+        "value": 18500,
+        "unit": "jiwa/km²",
+        "note": "indikatif untuk visualisasi WebGIS"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          110.377288,
+          -7.823329
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "TPS3R Nitikan 2",
+        "density": "Padat",
+        "value": 18000,
+        "unit": "jiwa/km²",
+        "note": "indikatif untuk visualisasi WebGIS"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          110.387659,
+          -7.830171
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Pringgokusuman",
+        "density": "Sangat Padat",
+        "value": 21000,
+        "unit": "jiwa/km²",
+        "note": "indikatif untuk visualisasi WebGIS"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          110.357115,
+          -7.791385
+        ]
+      }
+    }
+  ]
+}
