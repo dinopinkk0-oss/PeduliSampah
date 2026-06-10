@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Peta Zona Dampak TPS/TPA – WebGIS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link href="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.css" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/map.css" />
+</head>
+<body class="map-body">
+
+<!-- MUSIC PLAYER MINI -->
+<div id="musicPlayer" class="music-player-mini">
+  <button id="musicToggle" class="music-btn-mini" title="Putar/Pause Musik">
+    <i class="fas fa-music"></i>
+  </button>
+  <div class="music-wave music-wave-mini">
+    <span></span><span></span><span></span><span></span>
+  </div>
+</div>
+
+<!-- MAP NAVBAR -->
+<div class="map-navbar">
+  <a href="index.html" class="map-nav-back"><i class="fas fa-arrow-left"></i> Beranda</a>
+  <div class="map-nav-title">Peta Interaktif & Analisis Spasial TPS/TPA</div>
+  <div class="map-nav-actions">
+    <a href="berita.html" class="map-nav-btn" style="background:rgba(96,165,250,0.12);border-color:rgba(96,165,250,0.28);color:#93c5fd;">
+      <i class="fas fa-newspaper"></i> Berita
+    </a>
+    <a href="edukasi.html" class="map-nav-btn"><i class="fas fa-book-open"></i> Edukasi</a>
+  </div>
+</div>
+
+<!-- MAIN LAYOUT -->
+<div class="map-layout">
+
+  <!-- ==================== TABBED SIDEBAR ==================== -->
+  <aside id="sidebar" class="sidebar sidebar-tabbed">
+
+    <!-- Icon rail (always visible) -->
+    <nav class="tab-rail" role="tablist" aria-label="Menu panel">
+      <button class="tab-rail-btn active" data-tab="dashboard"   title="Dashboard"          role="tab" aria-selected="true">
+        <i class="fas fa-chart-pie"></i><span>Dashboard</span>
+      </button>
+      <button class="tab-rail-btn" data-tab="peta"         title="Peta"               role="tab">
+        <i class="fas fa-map"></i><span>Peta</span>
+      </button>
+      <button class="tab-rail-btn" data-tab="dampak"       title="Analisis Dampak"    role="tab">
+        <i class="fas fa-circle-dot"></i><span>Dampak</span>
+      </button>
+      <button class="tab-rail-btn" data-tab="pelayanan"    title="Analisis Pelayanan" role="tab">
+        <i class="fas fa-ruler-combined"></i><span>Pelayanan</span>
+      </button>
+      <button class="tab-rail-btn" data-tab="kesesuaian"   title="Kesesuaian Lahan"   role="tab">
+        <i class="fas fa-clipboard-check"></i><span>Lahan</span>
+      </button>
+      <button class="tab-rail-btn" data-tab="game"         title="TPS Cerdas"         role="tab">
+        <i class="fas fa-gamepad"></i><span>TPS Cerdas</span>
+      </button>
+      <button class="tab-rail-btn" data-tab="info"         title="Informasi"          role="tab">
+        <i class="fas fa-info-circle"></i><span>Info</span>
+      </button>
+      <!-- Collapse toggle at bottom -->
+      <button
+  class="tab-rail-btn tab-rail-collapse"
+  id="dashboardPanelToggle"
+  type="button"
+  title="Tutup Dashboard Analisis"
+>
+  <i class="fas fa-chevron-left"></i>
+  <span>Tutup</span>
+</button>
+    </nav>
+
+    <!-- Panel content area -->
+    <div class="tab-panels" id="tabPanels">
+
+      <!-- ---- 1. DASHBOARD ---- -->
+      <div class="tab-panel active" id="tab-dashboard" role="tabpanel">
+        <div class="tp-header">
+          <i class="fas fa-chart-pie tp-header-icon"></i>
+          <span>Dashboard Analisis</span>
+        </div>
+        <div class="dash-grid">
+          <div class="dash-card">
+            <strong id="dashFacilityCount">15</strong><span>Fasilitas</span>
+          </div>
+          <div class="dash-card dash-card-red">
+            <strong id="dashHighRiskCount">0</strong><span>Risiko Tinggi</span>
+          </div>
+          <div class="dash-card dash-card-yellow">
+            <strong id="dashUnderservedCount">0</strong><span>Area Prioritas</span>
+          </div>
+          <div class="dash-card dash-card-green">
+            <strong id="dashRecommendationCount">4</strong><span>Kandidat TPS</span>
+          </div>
+        </div>
+        <div class="dash-divider"></div>
+        <div class="dash-section-title"><i class="fas fa-triangle-exclamation"></i> Ringkasan Analisis</div>
+        <p class="tp-note">Dashboard dihitung otomatis dari radius pelayanan aktif dan layer indikatif. Angka diperbarui saat filter atau radius berubah.</p>
+        <div class="dash-action-row">
+          <button class="dash-shortcut-btn" onclick="switchTab('pelayanan')">
+            <i class="fas fa-ruler-combined"></i> Cek Pelayanan
+          </button>
+          <button class="dash-shortcut-btn" onclick="switchTab('dampak')">
+            <i class="fas fa-bullseye"></i> Lihat Dampak
+          </button>
+        </div>
+      </div>
+
+      <!-- ---- 2. PETA ---- -->
+      <div class="tab-panel" id="tab-peta" role="tabpanel">
+        <div class="tp-header">
+          <i class="fas fa-map tp-header-icon"></i>
+          <span>Pengaturan Peta</span>
+        </div>
+
+        <div class="tp-section-label">Pencarian Lokasi</div>
+        <div class="search-wrap">
+          <input type="text" id="searchInput" placeholder="Cari TPS/TPA/Depo..." class="search-input" />
+          <button id="searchBtn" class="search-btn"><i class="fas fa-search"></i></button>
+        </div>
+        <ul id="searchResults" class="search-results"></ul>
+
+        <div class="tp-section-label">Basemap</div>
+        <div class="basemap-btns">
+          <button id="btnStreets" class="basemap-btn active"><i class="fas fa-road"></i> Streets</button>
+          <button id="btnSatellite" class="basemap-btn"><i class="fas fa-satellite"></i> Satelit</button>
+        </div>
+
+        <div class="tp-section-label">Filter Fasilitas</div>
+        <div class="filter-group">
+          <label class="filter-item">
+            <input type="checkbox" class="filter-cb" value="TPA" checked />
+            <span class="filter-dot red-dot"></span> TPA
+          </label>
+          <label class="filter-item">
+            <input type="checkbox" class="filter-cb" value="TPS" checked />
+            <span class="filter-dot yellow-dot"></span> TPS
+          </label>
+          <label class="filter-item">
+            <input type="checkbox" class="filter-cb" value="TPST" checked />
+            <span class="filter-dot blue-dot"></span> TPST
+          </label>
+          <label class="filter-item">
+            <input type="checkbox" class="filter-cb" value="TPS3R" checked />
+            <span class="filter-dot purple-dot"></span> TPS3R
+          </label>
+          <label class="filter-item">
+            <input type="checkbox" class="filter-cb" value="Depo" checked />
+            <span class="filter-dot green-dot"></span> Depo
+          </label>
+        </div>
+
+        <div class="tp-section-label">Layer Pendukung</div>
+        <div class="filter-group">
+          <label class="filter-item support-layer-item">
+            <input type="checkbox" class="support-layer-cb" value="admin" checked />
+            <span class="layer-swatch admin-swatch"></span> Batas Administrasi
+          </label>
+          <label class="filter-item support-layer-item">
+            <input type="checkbox" class="support-layer-cb" value="density" />
+            <span class="layer-swatch density-swatch"></span> Kepadatan Penduduk
+          </label>
+          <label class="filter-item support-layer-item">
+            <input type="checkbox" class="support-layer-cb" value="settlement" />
+            <span class="layer-swatch settlement-swatch"></span> Permukiman
+          </label>
+          <label class="filter-item support-layer-item">
+            <input type="checkbox" class="support-layer-cb" value="river" checked />
+            <span class="layer-swatch river-swatch"></span> Sungai
+          </label>
+          <label class="filter-item support-layer-item">
+            <input type="checkbox" class="support-layer-cb" value="road" checked />
+            <span class="layer-swatch road-swatch"></span> Jalan Utama
+          </label>
+          <label class="filter-item support-layer-item">
+            <input type="checkbox" class="support-layer-cb" value="recommendation" />
+            <span class="layer-swatch rec-swatch"></span> Rekomendasi TPS Baru
+          </label>
+        </div>
+        <p id="layerHint" class="tp-note">Administrasi, jalan, dan sungai memakai GeoJSON hasil konversi SHP RBI 25K.</p>
+      </div>
+
+      <!-- ---- 3. ANALISIS DAMPAK ---- -->
+      <div class="tab-panel" id="tab-dampak" role="tabpanel">
+        <div class="tp-header">
+          <i class="fas fa-circle-dot tp-header-icon"></i>
+          <span>Analisis Zona Dampak</span>
+        </div>
+        <div class="buffer-info-box">
+          <p><strong>Zona dampak</strong> menunjukkan area sekitar fasilitas TPS/TPA. Semakin dekat jaraknya, semakin besar potensi bau, gangguan visual, dan dampak lingkungan.</p>
+        </div>
+        <div class="tp-section-label">Keterangan Zona</div>
+        <div class="buffer-legend-block">
+          <div class="buf-zone-item">
+            <div class="buf-zone-swatch" style="background:#ef444433;border-color:#ef4444"></div>
+            <div>
+              <strong>100 m</strong>
+              <span>Risiko Tinggi — potensi dampak langsung</span>
+            </div>
+          </div>
+          <div class="buf-zone-item">
+            <div class="buf-zone-swatch" style="background:#f59e0b33;border-color:#f59e0b"></div>
+            <div>
+              <strong>250 m</strong>
+              <span>Risiko Sedang — perlu pemantauan</span>
+            </div>
+          </div>
+          <div class="buf-zone-item">
+            <div class="buf-zone-swatch" style="background:#22c55e33;border-color:#22c55e"></div>
+            <div>
+              <strong>500 m</strong>
+              <span>Risiko Rendah — masih dalam jangkauan</span>
+            </div>
+          </div>
+        </div>
+        <div class="tp-btn-group">
+          <button id="btnBuffer" class="btn-buffer">
+            <i class="fas fa-bullseye"></i> Tampilkan Zona Dampak
+          </button>
+          <button id="btnClearBuffer" class="btn-clear-buffer" style="display:none">
+            <i class="fas fa-times"></i> Hapus Buffer
+          </button>
+        </div>
+      </div>
+
+      <!-- ---- 4. ANALISIS PELAYANAN ---- -->
+      <div class="tab-panel" id="tab-pelayanan" role="tabpanel">
+        <div class="tp-header">
+          <i class="fas fa-ruler-combined tp-header-icon"></i>
+          <span>Analisis Pelayanan</span>
+        </div>
+
+        <div class="tp-section-label">Radius Pelayanan</div>
+        <div class="radius-control">
+          <div class="radius-display">
+            <span>Radius aktif:</span>
+            <strong><span id="serviceRadiusValue">500</span> m</strong>
+          </div>
+          <input type="range" id="serviceRadius" min="100" max="2000" value="500" step="50" />
+          <div class="radius-ticks">
+            <span>100 m</span><span>1.000 m</span><span>2.000 m</span>
+          </div>
+        </div>
+        <div class="tp-btn-group">
+          <button id="btnService" class="btn-analysis-action">
+            <i class="fas fa-draw-polygon"></i> Tampilkan Cakupan
+          </button>
+          <button id="btnClearService" class="btn-clear-buffer" style="display:none">
+            <i class="fas fa-times"></i> Hapus Cakupan
+          </button>
+        </div>
+
+        <div class="tp-section-label">Cek Lokasi Pengguna</div>
+        <div class="analysis-actions">
+          <button id="btnAnalyzeClick" class="btn-analysis-action">
+            <i class="fas fa-mouse-pointer"></i> Klik Lokasi di Peta
+          </button>
+          <button id="btnUseMyLocation" class="btn-analysis-secondary">
+            <i class="fas fa-crosshairs"></i> Pakai Lokasi Saya
+          </button>
+        </div>
+        <div id="analysisStatus" class="analysis-status">Belum ada lokasi dianalisis.</div>
+
+        <div class="tp-section-label">Hasil Analisis</div>
+        <div id="analysisPanel" class="analysis-panel empty">
+          <div class="empty-analysis">Hasil analisis akan muncul di sini.</div>
+        </div>
+        <button id="btnDownloadAnalysis" class="btn-download" disabled>
+          <i class="fas fa-file-csv"></i> Download Hasil CSV
+        </button>
+      </div>
+
+      <!-- ---- 5. KESESUAIAN LAHAN ---- -->
+      <div class="tab-panel" id="tab-kesesuaian" role="tabpanel">
+        <div class="tp-header">
+          <i class="fas fa-clipboard-check tp-header-icon"></i>
+          <span>Kesesuaian Lahan TPS</span>
+        </div>
+        <div class="kesesuaian-intro">
+          <p>Aktifkan <strong>Cek Lokasi</strong> di tab Pelayanan, lalu klik titik pada peta. Skor kesesuaian lahan akan tampil di sini secara otomatis.</p>
+        </div>
+
+        <div class="tp-section-label">Pembobotan Parameter</div>
+        <div class="bobot-table">
+          <div class="bobot-row header-row">
+            <span>Parameter</span><span>Bobot</span>
+          </div>
+          <div class="bobot-row">
+            <span><i class="fas fa-water bobot-icon river"></i> Jarak Sungai</span>
+            <span class="bobot-val">35%</span>
+          </div>
+          <div class="bobot-row">
+            <span><i class="fas fa-road bobot-icon road"></i> Jarak Jalan</span>
+            <span class="bobot-val">35%</span>
+          </div>
+          <div class="bobot-row">
+            <span><i class="fas fa-house bobot-icon house"></i> Jarak Permukiman</span>
+            <span class="bobot-val">30%</span>
+          </div>
+        </div>
+
+        <div class="tp-section-label">Tabel Skor</div>
+        <div class="skor-tabs">
+          <button class="skor-tab-btn active" data-skor="sungai">Sungai</button>
+          <button class="skor-tab-btn" data-skor="jalan">Jalan</button>
+          <button class="skor-tab-btn" data-skor="permukiman">Permukiman</button>
+        </div>
+        <div class="skor-table-wrap">
+          <div class="skor-table active" id="skor-sungai">
+            <div class="skor-row"><span>0 – 30 m</span><span class="skor-badge s1">1</span><span>Tidak Sesuai</span></div>
+            <div class="skor-row"><span>31 – 50 m</span><span class="skor-badge s2">2</span><span>Kurang Sesuai</span></div>
+            <div class="skor-row"><span>51 – 100 m</span><span class="skor-badge s3">3</span><span>Sesuai</span></div>
+            <div class="skor-row"><span>&gt; 100 m</span><span class="skor-badge s4">4</span><span>Sangat Sesuai</span></div>
+          </div>
+          <div class="skor-table" id="skor-jalan">
+            <div class="skor-row"><span>0 – 30 m</span><span class="skor-badge s2">2</span><span>Kurang Sesuai</span></div>
+            <div class="skor-row"><span>31 – 50 m</span><span class="skor-badge s3">3</span><span>Sesuai</span></div>
+            <div class="skor-row"><span>51 – 100 m</span><span class="skor-badge s4">4</span><span>Sangat Sesuai</span></div>
+            <div class="skor-row"><span>&gt; 100 m</span><span class="skor-badge s1">1</span><span>Tidak Sesuai</span></div>
+          </div>
+          <div class="skor-table" id="skor-permukiman">
+            <div class="skor-row"><span>0 – 30 m</span><span class="skor-badge s1">1</span><span>Tidak Sesuai</span></div>
+            <div class="skor-row"><span>31 – 50 m</span><span class="skor-badge s2">2</span><span>Kurang Sesuai</span></div>
+            <div class="skor-row"><span>51 – 100 m</span><span class="skor-badge s4">4</span><span>Sangat Sesuai</span></div>
+            <div class="skor-row"><span>&gt; 100 m</span><span class="skor-badge s3">3</span><span>Sesuai</span></div>
+          </div>
+        </div>
+
+        <div class="tp-section-label">Hasil Analisis Terakhir</div>
+        <div id="kesesuaianResult" class="kesesuaian-result-panel">
+          <div class="empty-analysis">Klik lokasi pada peta untuk melihat skor kesesuaian lahan.</div>
+        </div>
+
+        <p class="tp-note tp-source">Sumber: Suryadi et al. (2025) — Optimalisasi Persebaran TPS Berbasis Data Geospasial. ATASI Journal Vol.1.</p>
+      </div>
+
+      <!-- ---- 6. VALIDASI TPS/TPA ---- -->
+      <div class="tab-panel" id="tab-validasi" role="tabpanel">
+        <div class="tp-header">
+          <i class="fas fa-shield-halved tp-header-icon"></i>
+          <span>Validasi TPS/TPA</span>
+        </div>
+        <div class="validasi-intro">
+          <p>Klik marker TPS/TPA pada peta untuk melihat profil validasi lengkap di sini.</p>
+        </div>
+        <div id="validasiPanelContent" class="validasi-panel-content">
+          <div class="validasi-empty">
+            <div class="validasi-empty-icon"><i class="fas fa-map-location-dot"></i></div>
+            <h3>Belum ada lokasi dipilih</h3>
+            <p>Klik salah satu marker TPS/TPA/Depo pada peta untuk melihat profil validasi, dokumentasi visual, kondisi sekitar, dan confidence score.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ---- 7. TPS CERDAS ---- -->
+      <div class="tab-panel" id="tab-game" role="tabpanel">
+        <div class="tp-header">
+          <i class="fas fa-gamepad tp-header-icon"></i>
+          <span>Mini Game: TPS Cerdas</span>
+        </div>
+        <div class="game-card">
+          <div class="game-title">🎯 Cari lokasi TPS baru terbaik</div>
+          <p class="game-desc">Klik lokasi di peta. Sistem menilai berdasarkan keterlayanan, kepadatan, jarak sungai, akses jalan, dan permukiman.</p>
+          <div class="game-stats">
+            <div class="game-stat-item">
+              <strong id="gameRound">0/3</strong><span>Ronde</span>
+            </div>
+            <div class="game-stat-item">
+              <strong id="gameBest">0</strong><span>Terbaik</span>
+            </div>
+            <div class="game-stat-item">
+              <strong id="gameAverage">0</strong><span>Rata-rata</span>
+            </div>
+          </div>
+          <div id="gameStatus" class="game-status">Tekan mulai, lalu pilih 3 lokasi kandidat pada peta.</div>
+          <div class="game-btn-row">
+            <button id="btnStartGame" class="btn-game-start">
+              <i class="fas fa-play"></i> Mulai Misi
+            </button>
+            <button id="btnResetGame" class="btn-game-reset">
+              <i class="fas fa-rotate-left"></i> Reset
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ---- 8. INFORMASI ---- -->
+      <div class="tab-panel" id="tab-info" role="tabpanel">
+        <div class="tp-header">
+          <i class="fas fa-info-circle tp-header-icon"></i>
+          <span>Informasi & Legenda</span>
+        </div>
+
+        <div class="tp-section-label">Legenda Fasilitas</div>
+        <div class="info-legend">
+          <div class="info-leg-item"><span class="leg-badge red-badge">TPA</span><span>Tempat Pembuangan Akhir</span></div>
+          <div class="info-leg-item"><span class="leg-badge yellow-badge">TPS</span><span>Tempat Penampungan Sementara</span></div>
+          <div class="info-leg-item"><span class="leg-badge blue-badge">TPST</span><span>Pengolahan Sampah Terpadu</span></div>
+          <div class="info-leg-item"><span class="leg-badge purple-badge">TPS3R</span><span>Reduce, Reuse, Recycle</span></div>
+          <div class="info-leg-item"><span class="leg-badge green-badge">DEPO</span><span>Depo/titik kumpul sampah</span></div>
+          <div class="info-leg-item"><span class="leg-badge purple-badge">KANDIDAT</span><span>Rekomendasi lokasi TPS baru</span></div>
+        </div>
+
+        <div class="tp-section-label">Sumber Data</div>
+        <ul class="source-list">
+          <li><strong>Titik TPS/TPA:</strong> Kompilasi dari Google Maps.</li>
+          <li><strong>Peta dasar:</strong> Mapbox Streets & Satellite.</li>
+          <li><strong>Administrasi, jalan, sungai:</strong> SHP RBI 25K → GeoJSON.</li>
+          <li><strong>Permukiman, kepadatan, rekomendasi:</strong> Layer indikatif/simulasi.</li>
+          <li><strong>Analisis:</strong> Proximity, buffer, keterlayanan, skor prioritas.</li>
+        </ul>
+
+        <div class="tp-section-label">Batasan Data</div>
+        <div class="scope-note">
+          Layer indikatif perlu diganti dengan SHP/GeoJSON resmi dari InaGeoportal, BPS, atau instansi terkait untuk penelitian final.
+        </div>
+
+        <div class="tp-section-label">Cara Penggunaan</div>
+        <ul class="user-guide">
+          <li><i class="fas fa-mouse-pointer"></i> Klik marker → detail & validasi fasilitas</li>
+          <li><i class="fas fa-search"></i> Cari TPS/TPA lewat tab Peta</li>
+          <li><i class="fas fa-bullseye"></i> Tab Dampak → zona buffer 100/250/500 m</li>
+          <li><i class="fas fa-ruler"></i> Tab Pelayanan → radius & cek lokasi</li>
+          <li><i class="fas fa-clipboard-check"></i> Tab Lahan → skor kesesuaian lahan</li>
+          <li><i class="fas fa-shield-halved"></i> Tab Validasi → profil & dokumentasi TPS</li>
+          <li><i class="fas fa-gamepad"></i> Tab TPS Cerdas → simulasi lokasi TPS baru</li>
+        </ul>
+        <div class="info-tip">
+          <i class="fas fa-lightbulb"></i>
+          Analisis spasial memakai Turf.js: buffer, nearest point, dan point-in-polygon.
+        </div>
+      </div>
+
+    </div><!-- /tab-panels -->
+  </aside><!-- /sidebar -->
+
+  <!-- ==================== MAP CONTAINER ==================== -->
+  <div class="map-container-wrap" id="mapContainerWrap">
+    <div id="map"></div>
+
+    <!-- Mobile sidebar toggle -->
+    <button id="mobileSidebarToggle" class="mobile-sidebar-toggle" aria-label="Buka panel kontrol">
+      <i class="fas fa-sliders-h"></i>
+    </button>
+
+    <!-- Click mode badge -->
+    <div id="clickModeBadge" class="click-mode-badge hidden">
+      <i class="fas fa-location-crosshairs"></i> Mode cek lokasi aktif — klik titik pada peta
+    </div>
+
+    <!-- Validation drawer (kept for backward compat but hidden by default; tab handles it) -->
+    <div id="validationDrawerBackdrop" class="validation-drawer-backdrop"></div>
+    <aside id="validationDrawer" class="validation-drawer" aria-hidden="true">
+      <div class="validation-drawer-topbar">
+        <div class="validation-drawer-badge" id="validationDrawerBadge">Profil TPS</div>
+        <button id="validationDrawerClose" class="validation-drawer-close" type="button">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div id="validationDrawerContent" class="validation-drawer-content">
+        <div class="validation-drawer-empty">
+          <div class="validation-drawer-empty-icon"><i class="fas fa-map-location-dot"></i></div>
+          <h3>Klik titik TPS/TPA untuk melihat detail validasi</h3>
+        </div>
+      </div>
+    </aside>
+
+  </div>
+</div>
+
+<!-- Loading -->
+<div id="mapLoading" class="map-loading">
+  <div class="loading-spinner"></div>
+  <p>Memuat Peta...</p>
+</div>
+
+<script src="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@turf/turf@6/turf.min.js"></script>
+<script src="js/map.js"></script>
+<script src="js/map-tabs.js"></script>
+<script src="js/main.js"></script>
+
+<!-- Hidden stubs for JS backward compat -->
+<button id="btnReset" style="display:none"></button>
+<button id="quickAnalyzeBtn" style="display:none"></button>
+<button id="quickGameBtn" style="display:none"></button>
+</body>
+</html>

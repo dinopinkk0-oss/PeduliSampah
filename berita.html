@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Berita Sampah DIY – WebGIS TPS/TPA Yogyakarta</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="css/style.css"/>
+  <style>
+    :root {
+      --green-400:#4ade80;--green-500:#22c55e;--green-600:#16a34a;
+      --green-900:#14532d;--green-950:#052e16;
+    }
+    body { background: #0a1628; color: #e2e8f0; font-family: 'Poppins', sans-serif; margin: 0; }
+
+    /* NAVBAR */
+    .news-navbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+      height: 56px;
+      background: rgba(5,46,22,0.97);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(34,197,94,0.2);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 20px; gap: 12px;
+    }
+    .news-nav-back {
+      display: flex; align-items: center; gap: 6px;
+      color: rgba(255,255,255,0.7); text-decoration: none;
+      font-size: 13px; font-weight: 500;
+      padding: 6px 12px; border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.15);
+      transition: all 0.2s;
+    }
+    .news-nav-back:hover { color: #fff; background: rgba(255,255,255,0.08); }
+    .news-nav-brand { font-size: 14px; font-weight: 700; color: #fff; display: flex; align-items: center; gap: 7px; }
+    .news-nav-links { display: flex; gap: 6px; }
+    .news-nav-link {
+      color: rgba(255,255,255,0.65); text-decoration: none;
+      font-size: 12px; font-weight: 500;
+      padding: 5px 12px; border-radius: 8px;
+      border: 1px solid rgba(74,222,128,0.15);
+      background: rgba(74,222,128,0.05);
+      transition: all 0.2s;
+    }
+    .news-nav-link:hover, .news-nav-link.active { color: #86efac; background: rgba(74,222,128,0.12); border-color: rgba(74,222,128,0.3); }
+
+    /* HERO */
+    .news-hero {
+      position: relative; padding: 100px 20px 60px;
+      background: linear-gradient(135deg, #052e16 0%, #0a1628 50%, #0c1a3a 100%);
+      text-align: center; overflow: hidden;
+    }
+    .news-hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(34,197,94,0.12) 0%, transparent 65%);
+    }
+    .news-hero-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(74,222,128,0.1); border: 1px solid rgba(74,222,128,0.25);
+      color: #86efac; padding: 5px 16px; border-radius: 999px;
+      font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+      margin-bottom: 1.2rem;
+    }
+    .news-hero h1 { font-size: clamp(1.6rem, 3.5vw, 2.4rem); font-weight: 800; color: #fff; margin-bottom: 0.8rem; line-height: 1.25; }
+    .news-hero h1 span { background: linear-gradient(90deg, #4ade80, #86efac); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .news-hero p { font-size: 14px; color: rgba(255,255,255,0.6); max-width: 550px; margin: 0 auto; line-height: 1.7; }
+
+    /* MAIN */
+    .news-container { max-width: 1100px; margin: 0 auto; padding: 3rem 20px 4rem; }
+
+    /* FILTER TABS */
+    .news-tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 2rem; }
+    .news-tab {
+      padding: 6px 16px; border-radius: 999px; font-size: 12px; font-weight: 600;
+      border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.05);
+      color: rgba(255,255,255,0.55); cursor: pointer; transition: all 0.2s; font-family: 'Poppins', sans-serif;
+    }
+    .news-tab:hover { border-color: rgba(74,222,128,0.35); color: #86efac; }
+    .news-tab.active { background: rgba(34,197,94,0.15); border-color: rgba(74,222,128,0.45); color: #4ade80; }
+
+    /* FEATURED NEWS */
+    .news-featured {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+    .news-featured-main {
+      grid-column: 1 / 2; background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.09); border-radius: 20px;
+      overflow: hidden; transition: all 0.3s; cursor: pointer; text-decoration: none;
+      display: block;
+    }
+    .news-featured-main:hover { border-color: rgba(74,222,128,0.3); transform: translateY(-3px); box-shadow: 0 12px 40px rgba(0,0,0,0.3); }
+    .news-featured-img {
+      width: 100%; height: 220px; object-fit: cover;
+      background: linear-gradient(135deg, #14532d, #052e16);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 4rem; color: rgba(255,255,255,0.15);
+    }
+    .news-featured-body { padding: 20px; }
+
+    .news-featured-side { display: flex; flex-direction: column; gap: 1rem; }
+
+    /* NEWS CARD */
+    .news-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 14px; overflow: hidden;
+      transition: all 0.3s; cursor: pointer; display: block; text-decoration: none;
+    }
+    .news-card:hover { border-color: rgba(74,222,128,0.28); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,0,0,0.25); }
+    .news-card-body { padding: 16px; }
+    .news-card-horizontal { display: flex; gap: 14px; align-items: flex-start; }
+    .news-card-icon {
+      width: 52px; height: 52px; border-radius: 10px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.6rem;
+      background: linear-gradient(135deg, rgba(20,83,45,0.6), rgba(5,46,22,0.8));
+    }
+    .news-cat {
+      display: inline-flex; align-items: center; gap: 4px;
+      font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px;
+      padding: 2px 9px; border-radius: 10px; margin-bottom: 7px;
+    }
+    .cat-tps { background: rgba(251,191,36,0.15); color: #fbbf24; }
+    .cat-tpa { background: rgba(239,68,68,0.15); color: #f87171; }
+    .cat-kebijakan { background: rgba(96,165,250,0.15); color: #60a5fa; }
+    .cat-lingkungan { background: rgba(34,197,94,0.15); color: #4ade80; }
+    .cat-inovasi { background: rgba(168,85,247,0.15); color: #c084fc; }
+
+    .news-title {
+      font-size: 14px; font-weight: 700; color: #e2e8f0; line-height: 1.45;
+      margin-bottom: 8px;
+    }
+    .news-featured-main .news-title { font-size: 17px; }
+    .news-excerpt {
+      font-size: 12px; color: rgba(255,255,255,0.5); line-height: 1.6; margin-bottom: 10px;
+    }
+    .news-meta {
+      display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+      font-size: 10px; color: rgba(255,255,255,0.35);
+    }
+    .news-meta i { color: rgba(74,222,128,0.5); }
+    .news-src-link {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 11px; font-weight: 600; color: #86efac;
+      text-decoration: none; padding: 4px 10px; border-radius: 8px;
+      background: rgba(74,222,128,0.08); border: 1px solid rgba(74,222,128,0.2);
+      transition: all 0.2s; margin-top: 8px;
+    }
+    .news-src-link:hover { background: rgba(74,222,128,0.15); color: #4ade80; }
+
+    /* GRID SECTION */
+    .news-section-title {
+      font-size: 13px; font-weight: 700; color: rgba(134,239,172,0.65);
+      text-transform: uppercase; letter-spacing: 1.2px;
+      margin: 2.5rem 0 1.2rem;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .news-section-title::after { content: ''; flex: 1; height: 1px; background: rgba(74,222,128,0.12); }
+
+    .news-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.2rem; }
+
+    /* BERITA WINDOW EMBED */
+    .news-embed-wrap {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.09);
+      border-radius: 16px; overflow: hidden; margin-bottom: 1.2rem;
+    }
+    .news-embed-header {
+      padding: 12px 16px;
+      background: rgba(5,46,22,0.6);
+      border-bottom: 1px solid rgba(74,222,128,0.1);
+      display: flex; align-items: center; gap: 10px;
+    }
+    .news-embed-header .embed-src { font-size: 12px; font-weight: 600; color: #86efac; }
+    .news-embed-header .embed-url { font-size: 10px; color: rgba(255,255,255,0.35); margin-left: auto; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 220px; }
+    .news-embed-iframe { width: 100%; height: 420px; border: none; }
+    .news-embed-open {
+      display: block; padding: 10px 16px;
+      background: rgba(74,222,128,0.06);
+      border-top: 1px solid rgba(74,222,128,0.1);
+      font-size: 11px; color: #86efac; text-decoration: none;
+      font-weight: 600; transition: all 0.2s; text-align: center;
+    }
+    .news-embed-open:hover { background: rgba(74,222,128,0.12); }
+
+    /* FOOTER */
+    .news-footer {
+      background: rgba(5,46,22,0.5);
+      border-top: 1px solid rgba(74,222,128,0.1);
+      padding: 2rem 20px; text-align: center;
+    }
+    .news-footer p { font-size: 12px; color: rgba(255,255,255,0.35); margin-bottom: 0.5rem; }
+    .news-footer a { color: #86efac; text-decoration: none; margin: 0 8px; font-size: 12px; }
+    .news-footer a:hover { color: #4ade80; }
+
+    /* MUSIC MINI */
+    .music-player-mini {
+      position: fixed; bottom: 16px; left: 16px; z-index: 9999;
+      display: flex; align-items: center; gap: 6px;
+      background: rgba(22,163,74,0.88); backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.18); border-radius: 999px;
+      padding: 5px 9px 5px 5px; box-shadow: 0 4px 18px rgba(22,163,74,0.35);
+    }
+    .music-btn-mini {
+      width: 26px; height: 26px; border-radius: 50%;
+      background: rgba(255,255,255,0.25); border: none; color: #fff;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      font-size: 10px; transition: all 0.2s;
+    }
+    .music-btn-mini:hover { background: rgba(255,255,255,0.4); transform: scale(1.1); }
+    .music-wave-mini { display: flex; align-items: flex-end; gap: 2px; height: 11px; }
+    .music-wave-mini span { width: 2.5px; background: rgba(255,255,255,0.7); border-radius: 2px; height: 3px; }
+    .music-wave-mini.active span { animation: wave 1.2s ease-in-out infinite; }
+    .music-wave-mini span:nth-child(1){animation-delay:0s;}
+    .music-wave-mini span:nth-child(2){animation-delay:.15s;}
+    .music-wave-mini span:nth-child(3){animation-delay:.3s;}
+    .music-wave-mini span:nth-child(4){animation-delay:.45s;}
+    @keyframes wave { 0%,100%{height:3px;}50%{height:11px;} }
+
+    @media (max-width: 700px) {
+      .news-featured { grid-template-columns: 1fr; }
+      .news-featured-main { grid-column: 1; }
+      .news-nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- MUSIC MINI -->
+<div class="music-player-mini" id="musicPlayer">
+  <button class="music-btn-mini" id="musicToggle" title="Putar/Pause Musik"><i class="fas fa-music"></i></button>
+  <div class="music-wave-mini" id="musicWaveMini">
+    <span></span><span></span><span></span><span></span>
+  </div>
+</div>
+
+<!-- NAVBAR -->
+<nav class="news-navbar">
+  <a href="index.html" class="news-nav-back"><i class="fas fa-arrow-left"></i> Beranda</a>
+  <div class="news-nav-brand">Berita Sampah DIY</div>
+  <div class="news-nav-links">
+    <a href="map.html" class="news-nav-link"><i class="fas fa-map-marked-alt"></i> Peta</a>
+    <a href="edukasi.html" class="news-nav-link"><i class="fas fa-book-open"></i> Edukasi</a>
+    <a href="berita.html" class="news-nav-link active"><i class="fas fa-newspaper"></i> Berita</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="news-hero">
+  <div class="news-hero-badge"><i class="fas fa-newspaper"></i> Update Terkini</div>
+  <h1>Berita Sampah &amp; Lingkungan<br/><span>Daerah Istimewa Yogyakarta</span></h1>
+  <p>Kumpulan berita terkini seputar pengelolaan TPS/TPA, kebijakan persampahan, dan isu lingkungan di DIY</p>
+</section>
+
+<!-- MAIN CONTENT -->
+<div class="news-container">
+
+  <!-- FILTER TABS -->
+  <div class="news-tabs">
+    <button class="news-tab active" onclick="filterNews('semua',this)">🗞️ Semua</button>
+    <button class="news-tab" onclick="filterNews('tps',this)">🗑️ TPS</button>
+    <button class="news-tab" onclick="filterNews('tpa',this)">🏔️ TPA</button>
+    <button class="news-tab" onclick="filterNews('kebijakan',this)">📋 Kebijakan</button>
+    <button class="news-tab" onclick="filterNews('lingkungan',this)">🌿 Lingkungan</button>
+    <button class="news-tab" onclick="filterNews('inovasi',this)">💡 Inovasi</button>
+  </div>
+
+  <!-- BERITA UTAMA (window embed dari sumber asli) -->
+  <div class="news-section-title"><i class="fas fa-link"></i> Berita Langsung dari Sumber</div>
+
+  <div class="news-embed-wrap" data-cat="tps">
+    <div class="news-embed-header">
+      <span style="font-size:1.2rem;">📡</span>
+      <span class="embed-src">Radar Jogja – Jawa Pos</span>
+      <span class="embed-url">radarjogja.jawapos.com</span>
+    </div>
+    <iframe class="news-embed-iframe"
+      src="https://radarjogja.jawapos.com/jogja/2405030022/tps3r-nitikan-belum-atasi-produksi-sampah-sebanyak-100-ton-akan-diserahkan-ke-pengolahan-swasta"
+      title="TPS3R Nitikan belum atasi produksi sampah"
+      loading="lazy"
+      sandbox="allow-scripts allow-same-origin allow-popups">
+    </iframe>
+    <a class="news-embed-open" href="https://radarjogja.jawapos.com/jogja/2405030022/tps3r-nitikan-belum-atasi-produksi-sampah-sebanyak-100-ton-akan-diserahkan-ke-pengolahan-swasta" target="_blank" rel="noopener">
+      <i class="fas fa-external-link-alt"></i> Buka Artikel Lengkap di Radar Jogja
+    </a>
+  </div>
+
+  <!-- BERITA KURATIF -->
+  <div class="news-section-title"><i class="fas fa-newspaper"></i> Ringkasan Berita Terpilih</div>
+
+  <div class="news-featured">
+    <a class="news-featured-main" href="https://radarjogja.jawapos.com/jogja/2405030022/tps3r-nitikan-belum-atasi-produksi-sampah-sebanyak-100-ton-akan-diserahkan-ke-pengolahan-swasta" target="_blank" rel="noopener" data-cat="tps">
+      <div class="news-featured-img" style="background:linear-gradient(135deg,#14532d,#1e3a5f);font-size:3.5rem;">♻️</div>
+      <div class="news-featured-body">
+        <span class="news-cat cat-tps"><i class="fas fa-dumpster"></i> TPS / TPS3R</span>
+        <div class="news-title">TPS3R Nitikan Belum Atasi Produksi Sampah, 100 Ton Diserahkan ke Pengolahan Swasta</div>
+        <div class="news-excerpt">Kapasitas TPS3R Nitikan di Yogyakarta tidak mencukupi untuk menangani volume sampah harian. Sekitar 100 ton sampah akan dialihkan ke pihak swasta untuk pengolahan lebih lanjut, mengindikasikan perlunya evaluasi distribusi fasilitas pengelolaan sampah di kota.</div>
+        <div class="news-meta">
+          <span><i class="fas fa-calendar"></i> 2024</span>
+          <span><i class="fas fa-building"></i> Radar Jogja – Jawa Pos</span>
+        </div>
+        <a class="news-src-link" onclick="event.stopPropagation()"><i class="fas fa-external-link-alt"></i> Baca Selengkapnya</a>
+      </div>
+    </a>
+
+    <div class="news-featured-side">
+      <a class="news-card" href="https://rri.co.id/yogyakarta/regional/1973571/faq.html" target="_blank" rel="noopener" data-cat="kebijakan">
+        <div class="news-card-body news-card-horizontal">
+          <div class="news-card-icon">📻</div>
+          <div>
+            <span class="news-cat cat-kebijakan"><i class="fas fa-gavel"></i> Kebijakan</span>
+            <div class="news-title">Update Pengelolaan Sampah DIY: Regulasi dan Kebijakan Terkini</div>
+            <div class="news-meta"><span><i class="fas fa-building"></i> RRI Yogyakarta</span></div>
+          </div>
+        </div>
+      </a>
+
+      <div class="news-card" data-cat="tpa">
+        <div class="news-card-body news-card-horizontal">
+          <div class="news-card-icon">🏔️</div>
+          <div>
+            <span class="news-cat cat-tpa"><i class="fas fa-mountain"></i> TPA</span>
+            <div class="news-title">Kapasitas TPA Piyungan Kritis, DIY Kaji Alternatif Pengelolaan Sampah Regional</div>
+            <div class="news-excerpt" style="font-size:11px;">TPA Piyungan yang melayani Sleman, Bantul, dan Yogyakarta kota mendekati kapasitas penuh. Pemerintah DIY tengah mengkaji solusi jangka panjang termasuk pengolahan sampah menjadi energi (WtE).</div>
+            <div class="news-meta"><span><i class="fas fa-calendar"></i> 2024</span><span><i class="fas fa-building"></i> Berbagai sumber</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="news-card" data-cat="inovasi">
+        <div class="news-card-body news-card-horizontal">
+          <div class="news-card-icon">💡</div>
+          <div>
+            <span class="news-cat cat-inovasi"><i class="fas fa-lightbulb"></i> Inovasi</span>
+            <div class="news-title">Bank Sampah Digital Yogyakarta: 700+ Unit Aktif Mendukung Ekonomi Sirkular</div>
+            <div class="news-excerpt" style="font-size:11px;">Lebih dari 700 bank sampah di Kota Yogyakarta kini terintegrasi digital, memungkinkan warga menukar sampah pilahan dengan poin yang dapat dikonversi menjadi manfaat sosial maupun ekonomi.</div>
+            <div class="news-meta"><span><i class="fas fa-calendar"></i> 2024</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BERITA GRID -->
+  <div class="news-section-title"><i class="fas fa-th-large"></i> Berita Lainnya</div>
+  <div class="news-grid" id="newsGrid">
+
+    <div class="news-card" data-cat="lingkungan">
+      <div class="news-card-body">
+        <span class="news-cat cat-lingkungan"><i class="fas fa-leaf"></i> Lingkungan</span>
+        <div class="news-title">Kali Code Terancam: Sampah TPS di Bantaran Sungai Jadi Sorotan</div>
+        <div class="news-excerpt">Sejumlah TPS yang berlokasi dekat Kali Code dan Kali Winongo dinilai berpotensi mencemari ekosistem sungai, terutama saat musim hujan. Komunitas warga minta evaluasi lokasi TPS.</div>
+        <div class="news-meta"><span><i class="fas fa-calendar"></i> 2024</span><span><i class="fas fa-map-marker-alt"></i> Yogyakarta</span></div>
+      </div>
+    </div>
+
+    <div class="news-card" data-cat="tps">
+      <div class="news-card-body">
+        <span class="news-cat cat-tps"><i class="fas fa-dumpster"></i> TPS</span>
+        <div class="news-title">Pemkot Yogyakarta Tambah 3 Depo Sampah di Wilayah Padat Penduduk</div>
+        <div class="news-excerpt">Pemerintah Kota Yogyakarta menambah 3 depo sampah baru di Kecamatan Gondokusuman, Danurejan, dan Ngampilan untuk mengatasi gap keterlayanan di kawasan padat permukiman.</div>
+        <div class="news-meta"><span><i class="fas fa-calendar"></i> 2024</span><span><i class="fas fa-building"></i> Humas Pemkot Yogyakarta</span></div>
+      </div>
+    </div>
+
+    <div class="news-card" data-cat="kebijakan">
+      <div class="news-card-body">
+        <span class="news-cat cat-kebijakan"><i class="fas fa-gavel"></i> Kebijakan</span>
+        <div class="news-title">Perda Sampah DIY Direvisi: Sanksi Tegas bagi Pembuangan Liar</div>
+        <div class="news-excerpt">DPRD DIY mengesahkan revisi peraturan daerah tentang pengelolaan sampah, memperketat sanksi terhadap pembuangan sampah sembarangan dan mendorong partisipasi aktif masyarakat dalam pemilahan.</div>
+        <div class="news-meta"><span><i class="fas fa-calendar"></i> 2024</span><span><i class="fas fa-map-marker-alt"></i> DIY</span></div>
+      </div>
+    </div>
+
+    <div class="news-card" data-cat="inovasi">
+      <div class="news-card-body">
+        <span class="news-cat cat-inovasi"><i class="fas fa-lightbulb"></i> Inovasi</span>
+        <div class="news-title">Maggot BSF: Solusi Inovatif Pengolahan Sampah Organik di Yogyakarta</div>
+        <div class="news-excerpt">Kelompok warga di beberapa kecamatan Yogyakarta mulai mengadopsi teknologi budidaya maggot Black Soldier Fly (BSF) untuk mengolah sampah organik dari pasar tradisional dan rumah tangga.</div>
+        <div class="news-meta"><span><i class="fas fa-calendar"></i> 2024</span><span><i class="fas fa-map-marker-alt"></i> Yogyakarta</span></div>
+      </div>
+    </div>
+
+    <div class="news-card" data-cat="lingkungan">
+      <div class="news-card-body">
+        <span class="news-cat cat-lingkungan"><i class="fas fa-leaf"></i> Lingkungan</span>
+        <div class="news-title">Studi Kualitas Udara di Sekitar TPA Karanganyar Tunjukkan Perbaikan</div>
+        <div class="news-excerpt">Hasil pemantauan kualitas udara 2024 menunjukkan penurunan kadar gas metana di sekitar TPA Karanganyar setelah pemasangan sistem gas capture, meski masih perlu pemantauan berkala.</div>
+        <div class="news-meta"><span><i class="fas fa-calendar"></i> 2024</span><span><i class="fas fa-map-marker-alt"></i> Mergangsan</span></div>
+      </div>
+    </div>
+
+    <div class="news-card" data-cat="tpa">
+      <div class="news-card-body">
+        <span class="news-cat cat-tpa"><i class="fas fa-mountain"></i> TPA</span>
+        <div class="news-title">TPST Karangmiri Kini Hasilkan RDF untuk Bahan Bakar Industri Semen</div>
+        <div class="news-excerpt">TPST Karangmiri resmi beroperasi mengolah sampah menjadi Refuse Derived Fuel (RDF) yang digunakan sebagai bahan bakar substitusi di pabrik semen. Mengolah hingga 150 ton sampah per hari.</div>
+        <div class="news-meta"><span><i class="fas fa-calendar"></i> 2024</span><span><i class="fas fa-map-marker-alt"></i> Umbulharjo</span></div>
+      </div>
+    </div>
+
+    <div class="news-card" data-cat="kebijakan">
+      <div class="news-card-body">
+        <span class="news-cat cat-kebijakan"><i class="fas fa-gavel"></i> Kebijakan</span>
+        <div class="news-title">Yogyakarta Targetkan Zero Waste 2030: Roadmap dan Progres Terkini</div>
+        <div class="news-excerpt">Pemkot Yogyakarta mempresentasikan roadmap menuju kota zero waste 2030, mencakup pengurangan sampah dari sumber, peningkatan fasilitas 3R, dan transformasi digital sistem pengelolaan sampah kota.</div>
+        <div class="news-meta"><span><i class="fas fa-calendar"></i> 2024</span><span><i class="fas fa-building"></i> Pemkot Yogyakarta</span></div>
+      </div>
+    </div>
+
+    <div class="news-card" data-cat="inovasi">
+      <div class="news-card-body">
+        <span class="news-cat cat-inovasi"><i class="fas fa-lightbulb"></i> Inovasi</span>
+        <div class="news-title">WebGIS Sampah DIY: Inovasi Digital untuk Perencanaan Fasilitas TPS Berbasis Data</div>
+        <div class="news-excerpt">Pengembangan platform WebGIS untuk pemetaan TPS/TPA di Kota Yogyakarta menjadi salah satu inovasi unggulan dalam mendukung perencanaan tata kota berbasis data spasial.</div>
+        <div class="news-meta"><span><i class="fas fa-calendar"></i> 2025</span><span><i class="fas fa-map-marker-alt"></i> Yogyakarta</span></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- SUMBER BERITA -->
+  <div class="news-section-title" style="margin-top:3rem;"><i class="fas fa-globe"></i> Sumber Berita Terpercaya</div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin-bottom:2rem;">
+    <a href="https://radarjogja.jawapos.com" target="_blank" rel="noopener" class="news-card" style="text-decoration:none;">
+      <div class="news-card-body news-card-horizontal">
+        <div class="news-card-icon" style="background:linear-gradient(135deg,rgba(239,68,68,0.2),rgba(239,68,68,0.1));font-size:1.3rem;">📰</div>
+        <div>
+          <div class="news-title" style="font-size:13px;">Radar Jogja</div>
+          <div class="news-meta"><span>radarjogja.jawapos.com</span></div>
+          <span class="news-src-link" style="margin-top:6px;font-size:10px;"><i class="fas fa-external-link-alt"></i> Kunjungi</span>
+        </div>
+      </div>
+    </a>
+    <a href="https://rri.co.id/yogyakarta" target="_blank" rel="noopener" class="news-card" style="text-decoration:none;">
+      <div class="news-card-body news-card-horizontal">
+        <div class="news-card-icon" style="background:linear-gradient(135deg,rgba(96,165,250,0.2),rgba(96,165,250,0.1));font-size:1.3rem;">📻</div>
+        <div>
+          <div class="news-title" style="font-size:13px;">RRI Yogyakarta</div>
+          <div class="news-meta"><span>rri.co.id/yogyakarta</span></div>
+          <span class="news-src-link" style="margin-top:6px;font-size:10px;"><i class="fas fa-external-link-alt"></i> Kunjungi</span>
+        </div>
+      </div>
+    </a>
+    <a href="https://jogja.tribunnews.com" target="_blank" rel="noopener" class="news-card" style="text-decoration:none;">
+      <div class="news-card-body news-card-horizontal">
+        <div class="news-card-icon" style="background:linear-gradient(135deg,rgba(251,191,36,0.2),rgba(251,191,36,0.1));font-size:1.3rem;">🗞️</div>
+        <div>
+          <div class="news-title" style="font-size:13px;">Tribun Jogja</div>
+          <div class="news-meta"><span>jogja.tribunnews.com</span></div>
+          <span class="news-src-link" style="margin-top:6px;font-size:10px;"><i class="fas fa-external-link-alt"></i> Kunjungi</span>
+        </div>
+      </div>
+    </a>
+    <a href="https://harianjogja.com" target="_blank" rel="noopener" class="news-card" style="text-decoration:none;">
+      <div class="news-card-body news-card-horizontal">
+        <div class="news-card-icon" style="background:linear-gradient(135deg,rgba(34,197,94,0.2),rgba(34,197,94,0.1));font-size:1.3rem;">📄</div>
+        <div>
+          <div class="news-title" style="font-size:13px;">Harian Jogja</div>
+          <div class="news-meta"><span>harianjogja.com</span></div>
+          <span class="news-src-link" style="margin-top:6px;font-size:10px;"><i class="fas fa-external-link-alt"></i> Kunjungi</span>
+        </div>
+      </div>
+    </a>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer class="news-footer">
+  <p>© 2026 Kelompok 1 – Teknik Geomatika, UPN "Veteran" Yogyakarta</p>
+  <p>"Peduli Sampah dan Lingkungan untuk Masa Depan yang Lebih Sehat"</p>
+  <div style="margin-top:0.8rem;">
+    <a href="index.html">Beranda</a>
+    <a href="map.html">Peta</a>
+    <a href="edukasi.html">Edukasi</a>
+    <a href="berita.html">Berita</a>
+  </div>
+</footer>
+
+<script>
+// MUSIC
+const audio = new Audio('backsound.mp3');
+audio.loop = true; audio.volume = 0.5;
+let mPlay = false;
+const mBtn = document.getElementById('musicToggle');
+const mWave = document.getElementById('musicWaveMini');
+
+function setPlaying(p) {
+  mPlay = p;
+  mBtn.innerHTML = p ? '<i class="fas fa-pause"></i>' : '<i class="fas fa-music"></i>';
+  mBtn.classList.toggle('playing', p);
+  if (mWave) mWave.classList.toggle('active', p);
+}
+mBtn.addEventListener('click', () => {
+  if (!mPlay) { audio.play().catch(()=>{}); setPlaying(true); }
+  else { audio.pause(); setPlaying(false); }
+});
+// Auto on first interact
+function tryPlay() {
+  if (!mPlay) { audio.play().then(()=>setPlaying(true)).catch(()=>{}); }
+  ['click','keydown','touchstart'].forEach(e => document.removeEventListener(e, tryPlay));
+}
+['click','keydown','touchstart'].forEach(e => document.addEventListener(e, tryPlay));
+
+// FILTER
+function filterNews(cat, btn) {
+  document.querySelectorAll('.news-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  const cards = document.querySelectorAll('[data-cat]');
+  cards.forEach(card => {
+    if (cat === 'semua' || card.dataset.cat === cat) {
+      card.style.display = '';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+</script>
+</body>
+</html>
